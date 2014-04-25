@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  p make a new post
+  form(name="new post", action="/create", method="post")
+    input(type="text", name="title")
+    input(type="text", name="body")
+    input(type="submit", value="Post")

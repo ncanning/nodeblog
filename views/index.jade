@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Your Posts
+
+  each post in posts
+    h4= post.title
+    p= post.body
+
+  p Create a new post
+
+  form(name="create", action="/create", method="get")
+    input(type="submit", value="Create") 
