@@ -20,7 +20,7 @@
 11 error There is likely additional logging output above.
 12 error System Linux 3.11.0-15-generic
 13 error command "/usr/bin/node" "/usr/bin/npm" "start"
-14 error cwd /home/nathan/nodejs/blog
+14 error cwd /home/nathan/nodestuff/nodeblog
 15 error node -v v0.10.26
 16 error npm -v 1.4.3
 17 error code ELIFECYCLE
