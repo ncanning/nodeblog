@@ -20,6 +20,22 @@ router.get('/create', function(req, res) {
   res.render('create', { title : 'New Post' });
 });
 
+router.get('/:user', function(req, res) {
+  User.findOne( {username : req.params.user}, function( err, user) {
+    if(!user) {
+      res.send('404!');
+    }
+    else {
+      Post.find( { user : user }, function( err, posts, count) {
+        res.render('user', {
+          title : user.name,
+          posts : posts
+        });
+      });
+    }
+  });
+});
+
 router.post('/create', function(req, res) {
   new Post({
     title : req.body.title,
