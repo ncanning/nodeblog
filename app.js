@@ -7,12 +7,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var session = require('express-session');
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
 var app = express();
 
 // view engine setup
@@ -30,30 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes);
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username}, function(err, user) {
-      if(err) { return done(err); }
-      if(!user) {
-        return done(null, false, { message: 'Incorrect username'});
-      }
-      if(user.password !== password) {
-        return done(null, false, { message: 'Incorrect password'});
-      }
-      return done(null, user);
-    });
-  }
-));
+//initialize passport functionality
+require('./config/passport')(passport);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

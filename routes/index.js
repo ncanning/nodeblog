@@ -7,13 +7,22 @@ var User = mongoose.model('User');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  Post.find( {user: req.session.passport.user},
-    function(err, posts, count) {
-    res.render( 'index', {
-      title : 'Blog Posts',
-      posts : posts
+  var user = req.session.passport.user;
+  if(user) {
+    Post.find( {user : user}, function(err, posts, count) {
+      res.render('home', {
+        title: 'Your Blog',
+        posts: posts
+      });
     });
-  });
+  } else {
+    Post.find( {user: req.session.passport.user},
+      function(err, posts, count) {
+      res.render( 'index', {
+        title : 'Blog Posts'
+      });
+    });
+  }
 });
 
 router.get('/create', function(req, res) {
@@ -57,7 +66,7 @@ router.post('/createuser', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', { successRedirect: '/',
-                                                failureRedirect: '/create'})
+                                                failureRedirect: '/'})
 );
 
 router.post('/delete', function(req, res) {
@@ -66,6 +75,11 @@ router.post('/delete', function(req, res) {
       res.redirect('/');
     });
   });
+});
+
+router.post('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;

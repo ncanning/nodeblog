@@ -1,27 +1,22 @@
 extends layout
 
 block content
-  h1 Your Posts
-
-  each post in posts
-    h4= post.title
-    p= post.body
-    form(name="delete" action="/delete", method="post")
-      input(type="hidden", name="id", value=post._id)
-      input(type="submit", value="Delete")
-
-  p Create a new post
-  form(name="create", action="/create", method="get")
-    input(type="submit", value="Create")
-
   p Create a user
   form(name="new user", action="/createuser", method="post")
-     input(type="text", name="username")
-     input(type="password", name="password")
-     input(type="submit", value="New User")
+    label(for="username") Username:
+    input(type="text", id="username", name="username")
+    br
+    label(for="password") Password:
+    input(type="password", id="password", name="password")
+    br
+    input(type="submit", value="New User")
 
   p Log in
   form(name="login", action="/login", method="post")
-    input(type="text", name="username")
-    input(type="password", name="password")
+    label(for="username") Username:
+    input(type="text", id="username", name="username")
+    br
+    label(for="password") Password:
+    input(type="password", id="password", name="password")
+    br
     input(type="submit", value="Log In")
