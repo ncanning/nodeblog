@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var app = express();
+require('./config/twilio');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

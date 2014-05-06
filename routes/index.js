@@ -59,8 +59,10 @@ router.post('/create', function(req, res) {
 router.post('/createuser', function(req, res) {
   new User({
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    phone: req.body.phone
   }).save(function(err, user, count) {
+    console.log(user);
     res.redirect('/');
   });
 });
@@ -80,6 +82,23 @@ router.post('/delete', function(req, res) {
 router.post('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
+});
+
+router.post('/api/sms', function(req, res) {
+  var text = req.body.Body;
+  var number = req.body.From;
+  User.findOne( { phone : number}, function(err, user) {
+    if(user) {
+      new Post({
+        title: 'Sent From Phone',
+        body: text,
+        publish_date: Date.now(),
+        user: user._id
+      }).save(function(err, post, count) {
+        console.log('post created for ' + user.username);
+      });
+    }
+  });
 });
 
 module.exports = router;

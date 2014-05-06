@@ -14,7 +14,8 @@ var Post = new Schema({
 
 var User = new Schema({
   username: String,
-  password: String
+  password: String,
+  phone: String
 });    
 
 mongoose.model('Post', Post);
